@@ -1,6 +1,6 @@
-# Project 3 - *Name of App Here*
+# Project 3 - *Twitter Part I*
 
-**Name of your app** is a basic twitter app to read your tweets.
+**Twitter Part I** is a basic twitter app to read your tweets.
 
 Time spent: **4** hours spent in total
 
@@ -15,6 +15,8 @@ The following **required** functionality is completed:
 - [x] User can view tweets with the user profile picture, username, and tweet text. (6pts)
 
 The following **bonus** features are implemented:
+
+Bonus stories were implemented but due to the rate limit, an updated walk through will be provided later. The code can be found in the under controllers > HomeViewcontroller.swift
 
 - [x] User can pull to refresh. (1pt)
 - [x] User can load past tweets infinitely. (2pts)
