@@ -26,6 +26,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         getTimelineData()
         
+        // allows user to refresh the table
         refreshControl.addTarget(self, action: #selector(getTimelineData), for: .valueChanged)
         timeLineTableView.refreshControl = refreshControl
     }
@@ -50,12 +51,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationItem.titleView = navBarImageView
     }
     
+    
+    /**
+                    Makes call to TwitterAPI to get authenticated user tweet timeline. Only saves a tweet's author, author picture, tweet text, and associated media. Will also end page refresh
+     */
     @objc func getTimelineData(){
         tweetCount = 20
         let reqUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         let reqParams = ["count": tweetCount]
         TwitterAPICaller.client?.getDictionariesRequest(url: reqUrl, parameters: reqParams, success: { (tweets: [NSDictionary]) in
-            var i = 0
+           
             self.timeline.removeAll()
             for tweet in tweets {
                 var postMediaUrl:String? = nil
@@ -75,7 +80,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let tempTweet = Tweet(author: name!, text: text!, imageUrl: imageUrl, media: postMediaUrl)
                 self.timeline.append(tempTweet)
                 postMediaUrl = nil
-                 i += 1
                 self.refreshControl.endRefreshing()
             }
     
@@ -91,6 +95,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    /**
+                            Applies pagination to to allow the table to load more tweet data as the table end is reached.
+     */
     func paginate(){
         let reqUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         let newTweetCount = tweetCount + 20
